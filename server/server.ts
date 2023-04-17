@@ -20,8 +20,13 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 // catch-all route handler
 app.use((req, res) => res.status(404).send('PAGE NOT FOUND!'));
 
+
+type ServerError = Error & {
+  status?: number;
+}
+
 // Global error handler
-app.use((err, req, res, next) => {
+app.use((err: ServerError, req: Request, res: Response, next: NextFunction) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
