@@ -1,0 +1,15 @@
+{
+  "name": "asset-price-notifier",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+    "dependencies": {
+      "concurrently": "^7.6.0"
+    },
+    "scripts": {
+      "start": "concurrently \"cd ./server && npm run server\" \"cd ./client && npm run dev\""
+    },
+  "devDependencies": {
+    "typescript": "^4.9.3"
+  }
+}
