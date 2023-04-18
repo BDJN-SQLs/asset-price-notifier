@@ -1,11 +1,12 @@
 import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
-import router from './routes/routes';
+import userRouter from './routes/userRoutes';
+import tickerRouter from './routes/tickerRoutes';
 const path = require('path');
 const db = require('./models/dbModel.ts');
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +18,9 @@ app.use(express.static(path.resolve(__dirname, '../client')));
  */
 
 // app.use('/solo', middleware);
-app.use('/user', router);
+app.use('/user', userRouter);
+
+app.use('/tickers', tickerRouter);
 
 // catch-all route handler
 app.use((req, res) => res.status(404).send('PAGE NOT FOUND!'));

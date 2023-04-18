@@ -14,7 +14,7 @@ const pool = new Pool({
 
 export default {
   query: (text: string, arr?: string[]) => {
-    console.log('executed query', text);
+    console.log('executed query', text, arr);
     return pool.query(text, arr);
   },
 };

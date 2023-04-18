@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-    "dependencies": {
-      "concurrently": "^7.6.0"
-    },
-    "scripts": {
-      "start": "concurrently \"cd ./server && npm run server\" \"cd ./client && npm run dev\"",
-      "postinstall": "cd ./client && npm install && cd ../server && npm install"
-    },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "scripts": {
+    "start": "concurrently \"cd ./server && npm start\" \"cd ./client && npm run dev\"",
+    "postinstall": "cd ./client && npm install && cd ../server && npm install"
+  },
   "devDependencies": {
     "typescript": "^4.9.3"
   }
