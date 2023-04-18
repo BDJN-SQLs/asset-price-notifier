@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import db from '../models/dbModel';
-import fs from 'fs';
-import path from 'path';
 import bcrypt from 'bcrypt';
 const SALTROUNDS = 5;
 

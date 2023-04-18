@@ -1,5 +1,5 @@
 import express from 'express';
-import { tickerController } from '../tickerController/tickerController';
+import { tickerController } from '../controllers/tickerController';
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.delete('/deleteNotif', tickerController.deleteNotif, (req, res) => {
 });
 
 router.post('/search', tickerController.search, (req, res) => {
-  return res.status(200).json(res.locals.search);
+  return res.status(200).json(res.locals.price);
 });
 
 export default router;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import db from '../models/dbModel';
-import fs from 'fs';
+import { prices, Tickers, TickerItem } from '../tickerPrice';
 
 interface tickerController {
   getUserTickers: RequestHandler;
@@ -9,12 +9,12 @@ interface tickerController {
   search: RequestHandler;
 }
 
-let position = 0;
+let time = 0;
 setInterval(() => {
-  position++;
-  console.log(position, 'position');
-  if (position === 10) {
-    position = 0;
+  time++;
+  // console.log(time, 'time');
+  if (time === 10) {
+    time = 0;
   }
 }, 5000);
 
@@ -39,10 +39,10 @@ export const tickerController = {
 
   createNotif: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { userId, ticker, targetPrice } = req.body;
+      const { userId, ticker, notifPrice } = req.body;
       const notif = await db.query(
         'INSERT INTO notifications (user_id, ticker, notifprice) VALUES ($1, $2, $3) RETURNING *',
-        [userId, ticker, targetPrice]
+        [userId, ticker, notifPrice]
       );
       res.locals.notif = notif.rows[0];
       return next();
@@ -74,5 +74,18 @@ export const tickerController = {
   },
 
   // must search the JSON obj for the ticker prices/names
-  search: async (req: Request, res: Response, next: NextFunction) => {},
+  search: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { ticker } = req.body;
+      const tickerData: TickerItem = prices[ticker];
+      res.locals.price = tickerData.price[time];
+      return next();
+    } catch (error) {
+      return next({
+        log: 'Error in tickerController.search',
+        status: 400,
+        message: { err: error },
+      });
+    }
+  },
 };
