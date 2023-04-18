@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from 'express';
-import dotenv from 'dotenv';
 import userRouter from './routes/userRoutes';
 import tickerRouter from './routes/tickerRoutes';
 const path = require('path');

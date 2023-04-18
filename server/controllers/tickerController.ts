@@ -10,13 +10,54 @@ interface tickerController {
 }
 
 let time = 0;
-setInterval(() => {
+setInterval(async () => {
   time++;
   // console.log(time, 'time');
   if (time === 10) {
     time = 0;
   }
-}, 5000);
+  // Check every ticker to see if it's price is equal to or below the notifPrice
+  const tickerWatch = await db.query(`
+   SELECT u._id, u.phone, n._id as notif_id, n.ticker, n.notifprice FROM users u
+   JOIN notifications n ON n.user_id = u._id`);
+  // Get everything from database
+  // Loop through each row and check if the current price of that ticker is equal to or below the notifPrice
+  for (let i = 0; i < tickerWatch.rows.length; i++) {
+    const { ticker, notifprice, phone, notif_id, _id } = tickerWatch.rows[i];
+    const price = prices[ticker].price[time];
+    if (price <= Number(notifprice)) {
+      // If it is, send text to the user
+      // sendText(ticker, price, phone, notifprice);
+      // Delete the notification from the database
+      // await db.query(
+      //   'DELETE FROM notifications WHERE user_id = $1 AND _id = $2 RETURNING *',
+      // [userId, notifId]
+      // );
+      console.log(`SEND TEXT ${ticker} at ${price} is below ${notifprice}}`);
+    }
+  }
+  //  if it is, send text
+}, 10000);
+
+const accountSid = process.env.accountSid;
+const authToken = process.env.authToken;
+const client = require('twilio')(accountSid, authToken);
+
+function sendText(
+  ticker: string,
+  price: number,
+  phone: string,
+  notifprice: number
+) {
+  client.messages
+    .create({
+      body: `ALERT: ${ticker} is now at $${price} which is below your notification price of $${notifprice}`,
+      from: '+18335300074',
+      to: phone,
+    })
+    .then((message: any) => console.log(message.sid))
+    .catch((err: any) => console.log('TWILIO', err));
+}
 
 export const tickerController = {
   getUserTickers: async (req: Request, res: Response, next: NextFunction) => {
