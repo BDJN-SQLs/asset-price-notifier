@@ -15,15 +15,15 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import AppTextInput from '../components/AppTextInput';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;
 
-const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
+const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async () => {
     try {
-      const data = await fetch('/user/login', {
+      const data = await fetch('http://localhost:8080/user/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -44,14 +44,26 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           style={{
             alignItems: 'center',
           }}
-        ></View>
+        >
+          <Text
+            style={{
+              fontSize: FontSize.xLarge,
+              color: Colors.primary,
+              fontFamily: Font['poppins-bold'],
+              marginVertical: Spacing * 3,
+            }}
+          >
+            Create account
+          </Text>
+        </View>
         <View
           style={{
             marginVertical: Spacing * 3,
           }}
         >
           <AppTextInput placeholder="Email" />
-          <AppTextInput placeholder="Password" secureTextEntry={true} />
+          <AppTextInput placeholder="Password" />
+          <AppTextInput placeholder="Confirm Password" />
         </View>
 
         <TouchableOpacity
@@ -78,11 +90,11 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               fontSize: FontSize.large,
             }}
           >
-            Sign in
+            Sign up
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigate('Register')}
+          onPress={() => navigate('Login')}
           style={{
             padding: Spacing,
           }}
@@ -95,7 +107,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               fontSize: FontSize.small,
             }}
           >
-            Register Here
+            Already have an account
           </Text>
         </TouchableOpacity>
 
@@ -109,6 +121,4 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
   );
 };
 
-export default LoginScreen;
-
-const styles = StyleSheet.create({});
+export default RegisterScreen;

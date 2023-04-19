@@ -17,6 +17,7 @@ const AppTextInput: React.FC<TextInputProps> = ({ ...otherProps }) => {
     <TextInput
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
+      // onChangeText={}
       placeholderTextColor={Colors.darkText}
       style={[
         {

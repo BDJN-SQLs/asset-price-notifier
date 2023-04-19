@@ -63,6 +63,7 @@ export const tickerController = {
   getUserTickers: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { userId } = req.body;
+      console.log('this is the body', req.body)
       const userTickers = await db.query(
         'SELECT * FROM notifications WHERE user_id = $1',
         [userId]

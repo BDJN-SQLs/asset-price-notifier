@@ -27,7 +27,8 @@
     "react-native-screens": "^3.20.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.19.4",
-    "react-router": "^6.10.0"
+    "react-router": "^6.10.0",
+    "react-native-dropdown-select-list": "2.0.4"
   },
   "scripts": {
     "start": "concurrently \"cd ./server && npm run server\" \"cd ./client && npm run dev\"",
