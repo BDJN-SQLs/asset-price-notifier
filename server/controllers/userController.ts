@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import db from '../models/dbModel';
+import cookieParser from 'cookie-parser';
 import bcrypt from 'bcrypt';
 const SALTROUNDS = 5;
 
@@ -8,6 +9,7 @@ interface userController {
   loginUser: RequestHandler;
   logoutUser: RequestHandler;
 }
+
 export const userController = {
   createUser: async (req: Request, res: Response, next: NextFunction) => {
     try {

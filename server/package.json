@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "@types/cookie-parser": "^1.4.3",
     "bcrypt": "^5.1.0",
     "concurrently": "^7.6.0",
+    "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
+    "mongoose": "^7.0.4",
     "path": "^0.12.7",
     "pg": "^8.10.0",
     "twilio": "^4.10.0"

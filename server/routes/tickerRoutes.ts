@@ -1,5 +1,6 @@
 import express from 'express';
 import { tickerController } from '../controllers/tickerController';
+import { sessionController } from '../controllers/sessionController';
 
 const router = express.Router();
 

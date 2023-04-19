@@ -4,13 +4,20 @@ import tickerRouter from './routes/tickerRoutes';
 const path = require('path');
 const db = require('./models/dbModel.ts');
 const app = express();
-
+const cookieParser = require('cookie-parser');
+// Postgres connection
 const PORT = process.env.PORT || 8080;
+// Mongo connection
+const mongoose = require('mongoose');
+const mongoURI = process.env.mongoURI;
+mongoose.connect(mongoURI);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, '../client')));
+
+app.use(cookieParser());
 
 /**
  * define route handlers
