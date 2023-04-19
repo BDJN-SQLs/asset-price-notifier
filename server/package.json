@@ -1,17 +1,30 @@
 {
   "dependencies": {
-    "concurrently": "^7.6.0"
+    "@types/cookie-parser": "^1.4.3",
+    "bcrypt": "^5.1.0",
+    "concurrently": "^7.6.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.4",
+    "path": "^0.12.7",
+    "pg": "^8.10.0",
+    "twilio": "^4.10.0"
   },
   "scripts": {
-    "start": "concurrently \"cd ./server && npm run server\" \"cd ./client && npm run dev\""
+    "start": "nodemon ./server.ts"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.11",
+    "dotenv": "^16.0.3",
     "eslint": "^8.35.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.21",
+    "ts-node": "^10.9.1"
   }
 }
