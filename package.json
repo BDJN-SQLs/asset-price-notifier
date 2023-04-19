@@ -5,7 +5,10 @@
     "react-dom": "18.2.0",
     "react-native": "0.71.3",
     "react-native-web": "~0.18.7",
-    "react-native-dropdown-select-list": "2.0.4"
+    "react-native-dropdown-select-list": "2.0.4",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/native-stack": "^6.9.12",
+    "react-native-safe-area-context": "^4.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
