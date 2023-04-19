@@ -4,18 +4,19 @@ import { sessionController } from '../controllers/sessionController';
 
 const router = express.Router();
 
-router.post('/signup', userController.createUser, (req, res) => {
+// signup and login both start a session
+router.post('/signup', userController.createUser, sessionController.startSession, (req, res) => {
   console.log('SIGNUP ROUTE', res.locals.userId);
   res.status(200).json(res.locals.userId);
 });
 
-router.post('/login', userController.loginUser, (req, res) => {
+router.post('/login', userController.loginUser, sessionController.startSession, (req, res) => {
   console.log('LOGIN ROUTE', res.locals.userId);
   res.status(200).json(res.locals.userId);
 });
 
-router.post('/logout', userController.logoutUser, (req, res) => {
-  console.log('LOGOUT ROUTE', res.locals.userId);
+// logout ends a session and deletes the cookie if it exists
+router.post('/logout', userController.logoutUser, sessionController.endSession, (req, res) => {
   res.sendStatus(200);
 });
 

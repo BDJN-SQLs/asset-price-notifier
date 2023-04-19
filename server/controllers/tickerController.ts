@@ -114,12 +114,12 @@ export const tickerController = {
     }
   },
 
-  // must search the JSON obj for the ticker prices/names
   search: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { ticker } = req.body;
       const tickerData: TickerItem = prices[ticker];
       res.locals.price = tickerData.price[time];
+      res.locals.name = tickerData.name;
       return next();
     } catch (error) {
       return next({
@@ -129,4 +129,18 @@ export const tickerController = {
       });
     }
   },
+
+  findAllTickers: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const tickers: string[] = Object.keys(prices);
+      res.locals.tickers = tickers;
+      return next();
+    } catch (error) {
+      return next({
+        log: 'Error in tickerController.findAllTickers',
+        status: 400,
+        message: { err: error },
+      });
+    }
+  }
 };

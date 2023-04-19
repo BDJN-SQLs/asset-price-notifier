@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import userRouter from './routes/userRoutes';
 import tickerRouter from './routes/tickerRoutes';
+import { sessionController } from './controllers/sessionController';
 const path = require('path');
 const db = require('./models/dbModel.ts');
 const app = express();
@@ -27,6 +28,11 @@ app.use(cookieParser());
 app.use('/user', userRouter);
 
 app.use('/tickers', tickerRouter);
+
+// use this route to check if user is logged in when new page is loaded
+app.get('/auth', sessionController.isLoggedin, (req, res) => {
+  return res.status(200).json(res.locals.user);
+});
 
 // catch-all route handler
 app.use((req, res) => res.status(404).send('PAGE NOT FOUND!'));

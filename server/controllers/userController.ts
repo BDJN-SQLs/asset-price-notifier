@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import db from '../models/dbModel';
 import cookieParser from 'cookie-parser';
+import uuid from 'uuid';
 import bcrypt from 'bcrypt';
 const SALTROUNDS = 5;
 
@@ -20,7 +21,18 @@ export const userController = {
         [email, hashedPassword, phone]
       );
       res.locals.userId = newUser.rows[0]._id;
+
+      // create random session id
+      const sessionId = uuid.v4();
+
+      // set cookie with session id
+      res.cookie('ssid', sessionId, { httpOnly: true });
+
+      // attach session id to res.locals
+      res.locals.SSIDCookie = sessionId;
+
       return next();
+
     } catch (error) {
       return next({
         log: `Error in userController.createUser`,
@@ -44,8 +56,15 @@ export const userController = {
         let hashedPassword;
         hashedPassword = user.rows[0].password;
         const compare = await bcrypt.compare(password, hashedPassword);
-        if (compare) res.locals.userId = user.rows[0]._id;
-        else res.locals.userId = 'invalid';
+        if (compare) {
+          res.locals.userId = user.rows[0]._id;
+
+          // create random session id and set cookie
+          const sessionId = uuid.v4();
+          res.cookie('ssid', sessionId, { httpOnly: true });
+          res.locals.SSIDCookie = sessionId;
+
+        } else res.locals.userId = 'invalid';
         return next();
       }
     } catch (error) {
@@ -59,7 +78,16 @@ export const userController = {
 
   logoutUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.body;
+      
+      // get ssid from cookie
+      const { ssid } = req.cookies;
+
+      // store ssid in res.locals to be used in middleware to delete session from db
+      res.locals.ssid = ssid;
+
+      // delete ssid cookie from browser
+      res.clearCookie('ssid');
+
       return next();
     } catch (error) {
       return next({
