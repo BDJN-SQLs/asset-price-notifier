@@ -67,7 +67,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         </View>
 
         <TouchableOpacity
-          onPress={handleSubmit}
+          onPress={()=>{navigate('wallstreetbets')}}
           style={{
             padding: Spacing * 2,
             backgroundColor: Colors.primary,

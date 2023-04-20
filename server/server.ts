@@ -26,7 +26,22 @@ mongoose.connect(mongoURI);
  */
 
 // app.use('/solo', middleware);
+const accountSid = process.env.accountSid;
+const authToken = process.env.authToken;
+const client = require('twilio')(accountSid, authToken);
 
+app.post('/twilio', (req, res) => {
+  const { ticker, price, phone, notifprice } = req.body;
+  client.messages
+  .create({
+    body: `ALERT: ${ticker} is now at $${price} which is below your notification price of $${notifprice}`,
+    from: '+18335300074',
+    to: phone,
+  })
+  .then((message: any) => console.log(message.sid))
+  .catch((err: any) => console.log('TWILIO', err));
+  res.sendStatus(200);
+})
 
 app.use('/user', userRouter);
 

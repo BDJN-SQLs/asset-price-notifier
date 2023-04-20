@@ -33,7 +33,7 @@ setInterval(async () => {
       //   'DELETE FROM notifications WHERE user_id = $1 AND _id = $2 RETURNING *',
       // [userId, notifId]
       // );
-      console.log(`SEND TEXT ${ticker} at ${price} is below ${notifprice}}`);
+      // console.log(`SEND TEXT ${ticker} at ${price} is below ${notifprice}}`);
     }
   }
   //  if it is, send text
